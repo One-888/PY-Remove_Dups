@@ -36,10 +36,10 @@ def main(
 
     file_list = glob.glob(f"{source_path}/**/*{file_type_}", recursive=True)
     total_file_list = len(file_list)
-    
-    for i, old_file in enumerate( file_list):
+
+    for i, old_file in enumerate(file_list):
         file_size = os.stat(old_file).st_size
-        pct = (i/total_file_list)*100
+        pct = (i / total_file_list) * 100
 
         if min_size < file_size < max_size:
             old_name = os.path.basename(old_file).replace(file_type_, "")
@@ -50,13 +50,13 @@ def main(
             # print(file_size)
 
             print(
-                f"{i}. {pct:.1f}pct HASH {hash_type}: {hash_text[0:7]}  - New File: {new_file}  - Old File: {old_name}  - Size: {file_size}"
+                f"{i}. {pct:.0f}pct HASH | {hash_type}: {hash_text[0:7]} | New File: {new_file} | Old File: {old_name} | Size: {file_size}"
             )
 
-            # try:
-            #     shutil.copy(old_file, new_file)
-            # except:
-            #     print(print(f"File: {new_file} already exists. Skip it"))
+            try:
+                shutil.copy(old_file, new_file)
+            except:
+                print(print(f"File: {new_file} already exists. Skip it"))
 
 
 if __name__ == "__main__":

@@ -57,7 +57,7 @@ def main(
                 )
             else:
                 print(
-                    f"{i}. {pct:.0f}pct of {total_file_list} HASH | {hash_type}: {hash_text[0:7]} | New File: {new_file} | Old File: {old_name} | Size: {file_size}"
+                    f"Copy {i}. {pct:.0f}pct of {total_file_list} HASH | {hash_type}: {hash_text[0:7]} | New File: {new_file} | Old File: {old_name} | Size: {file_size}"
                 )
 
                 try:

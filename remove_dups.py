@@ -37,6 +37,8 @@ def main(
     file_list = glob.glob(f"{source_path}/**/*{file_type_}", recursive=True)
     total_file_list = len(file_list)
 
+    mode = input("Enter Mode(list or copy): ")
+
     for i, old_file in enumerate(file_list):
         file_size = os.stat(old_file).st_size
         pct = (i / total_file_list) * 100
@@ -49,14 +51,19 @@ def main(
             new_file = ("_n_" + short_hash_text + file_type_).upper()
             # print(file_size)
 
-            print(
-                f"{i}. {pct:.0f}pct HASH | {hash_type}: {hash_text[0:7]} | New File: {new_file} | Old File: {old_name} | Size: {file_size}"
-            )
+            if mode == "list":
+                print(
+                    f"List: {i}. {pct:.0f}pct HASH | {hash_type}: {hash_text[0:7]} | New File: {new_file} | Old File: {old_name} | Size: {file_size}"
+                )
+            else:
+                print(
+                    f"{i}. {pct:.0f}pct HASH | {hash_type}: {hash_text[0:7]} | New File: {new_file} | Old File: {old_name} | Size: {file_size}"
+                )
 
-            try:
-                shutil.copy(old_file, new_file)
-            except:
-                print(print(f"File: {new_file} already exists. Skip it"))
+                try:
+                    shutil.copy(old_file, new_file)
+                except:
+                    print(print(f"File: {new_file} already exists. Skip it"))
 
 
 if __name__ == "__main__":

@@ -53,11 +53,11 @@ def main(
 
             if mode == "list":
                 print(
-                    f"List: {i}. {pct:.0f}pct HASH | {hash_type}: {hash_text[0:7]} | New File: {new_file} | Old File: {old_name} | Size: {file_size}"
+                    f"List: {i}. {pct:.0f}pct of {total_file_list} HASH | {hash_type}: {hash_text[0:7]} | New File: {new_file} | Old File: {old_name} | Size: {file_size}"
                 )
             else:
                 print(
-                    f"{i}. {pct:.0f}pct HASH | {hash_type}: {hash_text[0:7]} | New File: {new_file} | Old File: {old_name} | Size: {file_size}"
+                    f"{i}. {pct:.0f}pct of {total_file_list} HASH | {hash_type}: {hash_text[0:7]} | New File: {new_file} | Old File: {old_name} | Size: {file_size}"
                 )
 
                 try:

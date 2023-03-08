@@ -2,6 +2,7 @@ import hashlib
 import glob
 import shutil
 import os
+from moviepy.editor import VideoFileClip
 
 
 def make_hash(filename, hashtype):
@@ -43,7 +44,10 @@ def main(
         file_size = os.stat(old_file).st_size
         pct = (i / total_file_list) * 100
 
-        if min_size < file_size < max_size:
+        clip = VideoFileClip(old_file)
+        duration_sec = clip.duration
+
+        if min_size < file_size < max_size and 5 < duration_sec < 60:
             old_name = os.path.basename(old_file).replace(file_type_, "")
             hash_text = make_hash(filename=old_file, hashtype=hash_type)
 
@@ -53,11 +57,11 @@ def main(
 
             if mode == "list":
                 print(
-                    f"List: {i}. {pct:.0f}pct of {total_file_list} HASH | {hash_type}: {hash_text[0:7]} | New File: {new_file} | Old File: {old_name} | Size: {file_size}"
+                    f"List: {i}. {pct:.0f}pct of {total_file_list} HASH | {hash_type}: {hash_text[0:7]} | Second: {duration_sec} | New: {new_file} | Old: {old_name} | Size: {file_size}"
                 )
             else:
                 print(
-                    f"Copy {i}. {pct:.0f}pct of {total_file_list} HASH | {hash_type}: {hash_text[0:7]} | New File: {new_file} | Old File: {old_name} | Size: {file_size}"
+                    f"Copy: {i}. {pct:.0f}pct of {total_file_list} HASH | {hash_type}: {hash_text[0:7]} | Second: {duration_sec} | New: {new_file} | Old: {old_name} | Size: {file_size}"
                 )
 
                 try:

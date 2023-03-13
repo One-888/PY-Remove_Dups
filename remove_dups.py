@@ -27,18 +27,23 @@ def make_hash(filename, hashtype):
 def main(
     source_path,
     destination_path,
+    file_name,
     file_type,
     hash_type="SHA1",
-    min_size=1_000_000,
-    max_size=10_000_000,
+    min_sec=5,
+    max_sec=30,
+    recur=True,
+    progress_bar=False,
 ):
     os.chdir(destination_path)
     file_type_ = "." + file_type.lower()
 
-    file_list = glob.glob(f"{source_path}/**/IMG_????{file_type_}", recursive=True)
+    file_list = glob.glob(
+        f"{source_path}/**/{file_name}{file_type_}", recursive={recur}
+    )
     total_file_list = len(file_list)
 
-    mode = input("Enter Mode(list or copy): ")
+    mode = input("Enter Mode (l:list or c:copy): ")
 
     for i, old_file in enumerate(file_list):
         file_size = os.stat(old_file).st_size
@@ -60,7 +65,7 @@ def main(
             )
             duration_sec = 0
 
-        if 5 < duration_sec < 30:  # min_size < file_size < max_size and
+        if min_sec <= duration_sec <= max_sec:  # min_size < file_size < max_size and
             # print(file_size)
 
             if mode == "l":
@@ -72,9 +77,12 @@ def main(
                 except:
                     print(f"File: {new_file} already exists. Skip it")
 
-            print(
-                f"{mode_flag} {i}. {pct:.0%} of {total_file_list:,>} | {hash_type:>}: {hash_text[0:7]} | New: {new_file:>} | Old: {old_name} | Size: {file_size:,} | {old_file} | Sec: {duration_sec:0.0f} "
-            )
+            if progress_bar:
+                print(f"\r {pct:.0%} " + round(pct * 10) * "**", end="")
+            else:
+                print(
+                    f"{mode_flag} {i}. {pct:.0%} of {total_file_list:,>} | {hash_type:>}: {hash_text[0:7]} | New: {new_file:>} | Old: {old_name} | Size: {file_size:,} | {old_file} | Sec: {duration_sec:0.0f} "
+                )
 
 
 if __name__ == "__main__":

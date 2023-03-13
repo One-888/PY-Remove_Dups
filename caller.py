@@ -2,10 +2,13 @@ from remove_dups import main
 
 
 main(
-    r"F:\All Photos\iPhone_A\iPhone_Mei_Raw\2018",
-    r"C:\FFOutput\results",
-    "MOV",
-    "SHA1",
-    1_000_000,
-    10_000_000,
+    source_path=r"C:\Downloads\MOV",
+    destination_path=r"C:\Downloads\out",
+    file_name="*",
+    file_type="MOV",
+    hash_type="SHA1",
+    min_sec=1,
+    max_sec=30,
+    recur=True,
+    progress_bar=False,
 )
